@@ -8,13 +8,18 @@ export const userService = {
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({
+            "username": username,
+            "password": password
+        })
     };
 
-    return fetch(`/users/authenticate`, requestOptions)
+    return fetch(`http://localhost:3000/users/authenticate/admin`, requestOptions)
         .then(handleResponse)
         .then(user => {
+            console.log(user);
             // login successful if there's a jwt token in the response
             if (user.token) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes

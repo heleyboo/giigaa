@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch, Router, Redirect } from 'react-router-dom';
 import './App.scss';
 
 // Containers
@@ -9,12 +9,12 @@ import { Login, Page404, Page500, Register } from './views/Pages';
 // import { renderRoutes } from 'react-router-config';
 
 import {PrivateRoute} from './components';
-
+import { history } from './helpers';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route exact path="/login" name="Login Page" component={Login} />
           <Route exact path="/register" name="Register Page" component={Register} />

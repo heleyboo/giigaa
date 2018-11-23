@@ -50,6 +50,9 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit}>
                       <h1>Login</h1>
                       <p className="text-muted">Sign In to your account</p>
+                        {submitted && !username &&
+                            <div className="">Username is required</div>
+                        }
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -59,8 +62,12 @@ class Login extends Component {
                         <Input type="text" placeholder="Username" autoComplete="username" 
                         name="username"
                         value={username}
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange}
+                        className={submitted && !username ? 'is-invalid form-control' : ''} />
                       </InputGroup>
+                        {submitted && !password &&
+                            <div className="">Password is required</div>
+                        }
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -73,7 +80,8 @@ class Login extends Component {
                         autoComplete="current-password"
                         name="password"
                         value={password}
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange}
+                        className={submitted && !password ? 'is-invalid form-control' : ''}/>
                       </InputGroup>
                       <Row>
                         <Col xs="6">

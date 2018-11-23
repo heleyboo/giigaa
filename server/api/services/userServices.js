@@ -19,9 +19,9 @@ const login = (req, res) => {
 
 
   if (username === 'username' && password === 'password' && role) {
-    const tokenString = issueToken(username, role);
+    const token = issueToken(username, role);
     const response = {
-      tokenString,
+      token,
       username,
       role,
     };
