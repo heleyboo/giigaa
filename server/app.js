@@ -4,10 +4,21 @@ var SwaggerExpress = require('swagger-express-mw');
 var swaggerTools = require("swagger-tools");
 var YAML = require("yamljs");
 var swaggerConfig = YAML.load("./api/swagger/swagger.yaml");
+var cors = require('cors')
 var app = require('express')();
 var auth = require('./api/helpers/auth');
 module.exports = app; // for testing
-require( "./config/mongoose" )( app );
+require("./config/mongoose")(app);
+
+const bodyParser = require('body-parser');
+
+app.use(cors());
+
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 // var config = {
 //   appRoot: __dirname // required config
 // };
@@ -27,17 +38,17 @@ require( "./config/mongoose" )( app );
 //   }
 // });
 
-swaggerTools.initializeMiddleware(swaggerConfig, function(middleware) {
+swaggerTools.initializeMiddleware(swaggerConfig, function (middleware) {
   //Serves the Swagger UI on /docs
   app.use(middleware.swaggerMetadata()); // needs to go BEFORE swaggerSecurity
-  
+
   app.use(
     middleware.swaggerSecurity({
       //manage token function in the 'auth' module
       Bearer: auth.verifyToken
     })
   );
-  
+
   var routerConfig = {
     controllers: "./api/controllers",
     useStubs: false
@@ -46,8 +57,8 @@ swaggerTools.initializeMiddleware(swaggerConfig, function(middleware) {
   app.use(middleware.swaggerRouter(routerConfig));
 
   app.use(middleware.swaggerUi());
-  
-  app.listen(3000, function() {
+
+  app.listen(3000, function () {
     console.log("Started server on port 3000");
   });
 });

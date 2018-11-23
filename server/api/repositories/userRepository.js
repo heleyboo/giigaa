@@ -1,18 +1,20 @@
-const User = require('../databases').models.user;
+import models from '../databases';
+
+const User = models.userModel;
 
 const createUser = async (data) => {
-    let user = new User(data);
-    return user.save();
-}
+  const user = new User(data);
+  return user.save();
+};
 
-const findOneByUsername = async (username) => {
-    return User.findOne({username: username});
-}
+const findOneByUsername = async username => User.findOne({ username });
 
 const getAllUsers = async () => User.find({});
 
-module.exports = {
-    getAllUsers,
-    createUser,
-    findOneByUsername
-}
+const userRepository = {
+  getAllUsers,
+  createUser,
+  findOneByUsername,
+};
+
+export default userRepository;

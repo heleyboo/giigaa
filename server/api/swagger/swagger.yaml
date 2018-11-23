@@ -35,7 +35,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /login/{role}:
+  /users/authenticate/{role}:
     x-swagger-router-controller: UserController
     post:
       operationId: login
